@@ -19,6 +19,8 @@ import { AuthUser, UserRole } from '../types';
 
 interface AuthViewProps {
   onAuthSuccess: (user: AuthUser) => void;
+  onBackToHome?: () => void;
+  initialTab?: 'LOGIN' | 'SIGNUP';
 }
 
 type AuthTab = 'LOGIN' | 'SIGNUP' | 'FORGOT';
@@ -44,8 +46,12 @@ const GoogleIcon: React.FC = () => (
   </svg>
 );
 
-export const AuthView: React.FC<AuthViewProps> = ({ onAuthSuccess }) => {
-  const [activeTab, setActiveTab] = useState<AuthTab>('LOGIN');
+export const AuthView: React.FC<AuthViewProps> = ({ 
+  onAuthSuccess, 
+  onBackToHome,
+  initialTab = 'LOGIN'
+}) => {
+  const [activeTab, setActiveTab] = useState<AuthTab>(initialTab);
 
   // Form states
   const [email, setEmail] = useState('');
@@ -202,6 +208,35 @@ export const AuthView: React.FC<AuthViewProps> = ({ onAuthSuccess }) => {
           color: '#ffffff',
           position: 'relative'
         }}>
+          {onBackToHome && (
+            <button
+              type="button"
+              onClick={onBackToHome}
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                left: '1rem',
+                background: 'rgba(255, 255, 255, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                color: '#ffffff',
+                padding: '0.35rem 0.65rem',
+                borderRadius: '8px',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                zIndex: 2,
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.25)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)'}
+            >
+              <span>← Accueil</span>
+            </button>
+          )}
+
           <div style={{
             width: '60px',
             height: '60px',

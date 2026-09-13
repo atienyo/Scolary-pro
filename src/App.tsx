@@ -12,6 +12,7 @@ import { DailyRegisterModal } from './components/DailyRegisterModal';
 import { NewStudentModal } from './components/NewStudentModal';
 import { AuthView } from './components/AuthView';
 import { ChangePasswordModal } from './components/ChangePasswordModal';
+import { LandingPageView } from './components/LandingPageView';
 
 import { 
   initialSchoolConfig, 
@@ -34,8 +35,9 @@ import { realtimeService } from './services/realtimeService';
 import { Zap, CheckCircle2, Sparkles, X } from 'lucide-react';
 
 export function App() {
-  // Authentication State
+  // Authentication & Public View State
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
+  const [publicView, setPublicView] = useState<'LANDING' | 'LOGIN' | 'SIGNUP'>('LANDING');
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
   const [showChangePassword, setShowChangePassword] = useState<boolean>(false);
   const [liveNotification, setLiveNotification] = useState<{ title: string; subtitle: string; amount?: number } | null>(null);
@@ -228,9 +230,21 @@ export function App() {
     setCurrentRole(user.role);
   };
 
+  const handleStartDemo = () => {
+    const demoUser: AuthUser = {
+      id: 'demo-user',
+      email: 'directeur.demo@saintjoseph-ci.edu',
+      fullName: 'M. KOUASSI Jean-Baptiste',
+      role: 'DIRECTOR',
+      avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+    };
+    handleAuthSuccess(demoUser);
+  };
+
   const handleLogout = async () => {
     await authService.signOut();
     setCurrentUser(null);
+    setPublicView('LANDING');
   };
 
   // Handlers with Supabase sync
@@ -316,9 +330,25 @@ export function App() {
     );
   }
 
-  // If user is not authenticated, show the login / signup screen
+  // If user is not authenticated, show either Landing Page or Auth View
   if (!currentUser) {
-    return <AuthView onAuthSuccess={handleAuthSuccess} />;
+    if (publicView === 'LANDING') {
+      return (
+        <LandingPageView
+          onStartDemo={handleStartDemo}
+          onOpenLogin={() => setPublicView('LOGIN')}
+          onOpenSignUp={() => setPublicView('SIGNUP')}
+        />
+      );
+    }
+
+    return (
+      <AuthView 
+        onAuthSuccess={handleAuthSuccess} 
+        onBackToHome={() => setPublicView('LANDING')}
+        initialTab={publicView === 'SIGNUP' ? 'SIGNUP' : 'LOGIN'}
+      />
+    );
   }
 
   return (
