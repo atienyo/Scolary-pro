@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   GraduationCap, 
   ArrowRight, 
@@ -45,6 +45,18 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
 
   // Interactive ROI Calculator States
   const [studentCount, setStudentCount] = useState<number>(650);
@@ -115,7 +127,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           {/* Desktop Nav Links */}
           <nav className="landing-nav-links">
             <a className="landing-nav-link" onClick={() => scrollToSection('features')}>Fonctionnalités</a>
+            <a className="landing-nav-link" onClick={() => scrollToSection('guichet')}>Guichet Caisse</a>
             <a className="landing-nav-link" onClick={() => scrollToSection('how-it-works')}>Comment ça marche</a>
+            <a className="landing-nav-link" onClick={() => scrollToSection('comparatif')}>Comparatif</a>
             <a className="landing-nav-link" onClick={() => scrollToSection('pricing')}>Tarifs</a>
           </nav>
 
@@ -135,49 +149,127 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             className="btn-mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
+      </header>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-drawer">
+      {/* Mobile Navigation Drawer - OUTSIDE <header> to avoid backdrop-filter stacking trap */}
+      {mobileMenuOpen && (
+        <div className="mobile-drawer-overlay" onClick={() => setMobileMenuOpen(false)}>
+          <div className="mobile-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-drawer-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <GraduationCap size={20} color="#60a5fa" />
+                <span className="mobile-drawer-tag">Menu Navigation</span>
+              </div>
+              <button 
+                className="btn-mobile-close"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Fermer le menu"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
             <div className="mobile-drawer-links">
               <a className="mobile-drawer-link" onClick={() => scrollToSection('features')}>
-                <span>Fonctionnalités</span>
-                <ArrowRight size={16} color="#64748b" />
+                <div className="drawer-link-left">
+                  <div className="drawer-icon-box" style={{ background: 'rgba(59, 91, 219, 0.15)', color: '#60a5fa' }}>
+                    <Zap size={18} />
+                  </div>
+                  <div>
+                    <span className="drawer-link-title">Fonctionnalités</span>
+                    <span className="drawer-link-sub">Gestion complète des frais & caisse</span>
+                  </div>
+                </div>
+                <ArrowRight size={16} className="drawer-arrow" />
               </a>
+
+              <a className="mobile-drawer-link" onClick={() => scrollToSection('guichet')}>
+                <div className="drawer-link-left">
+                  <div className="drawer-icon-box" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399' }}>
+                    <Coins size={18} />
+                  </div>
+                  <div>
+                    <span className="drawer-link-title">Guichet Caisse & Reçus</span>
+                    <span className="drawer-link-sub">Espèces, Wave, Orange, MTN MoMo</span>
+                  </div>
+                </div>
+                <ArrowRight size={16} className="drawer-arrow" />
+              </a>
+
               <a className="mobile-drawer-link" onClick={() => scrollToSection('how-it-works')}>
-                <span>Comment ça marche</span>
-                <ArrowRight size={16} color="#64748b" />
+                <div className="drawer-link-left">
+                  <div className="drawer-icon-box" style={{ background: 'rgba(168, 85, 247, 0.15)', color: '#c084fc' }}>
+                    <Clock size={18} />
+                  </div>
+                  <div>
+                    <span className="drawer-link-title">Comment ça marche</span>
+                    <span className="drawer-link-sub">Prise en main en 3 étapes simples</span>
+                  </div>
+                </div>
+                <ArrowRight size={16} className="drawer-arrow" />
               </a>
+
+              <a className="mobile-drawer-link" onClick={() => scrollToSection('comparatif')}>
+                <div className="drawer-link-left">
+                  <div className="drawer-icon-box" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
+                    <BarChart3 size={18} />
+                  </div>
+                  <div>
+                    <span className="drawer-link-title">Comparatif ScolarPay</span>
+                    <span className="drawer-link-sub">vs Cahiers et tableurs Excel</span>
+                  </div>
+                </div>
+                <ArrowRight size={16} className="drawer-arrow" />
+              </a>
+
               <a className="mobile-drawer-link" onClick={() => scrollToSection('pricing')}>
-                <span>Grille tarifaire</span>
-                <ArrowRight size={16} color="#64748b" />
+                <div className="drawer-link-left">
+                  <div className="drawer-icon-box" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#fbbf24' }}>
+                    <Star size={18} />
+                  </div>
+                  <div>
+                    <span className="drawer-link-title">Grille tarifaire</span>
+                    <span className="drawer-link-sub">Formules transparentes sans surprise</span>
+                  </div>
+                </div>
+                <ArrowRight size={16} className="drawer-arrow" />
               </a>
             </div>
 
             <div className="mobile-drawer-actions">
               <button 
                 className="btn-hero-primary" 
-                style={{ width: '100%' }}
+                style={{ width: '100%', justifyContent: 'center' }}
                 onClick={() => { setMobileMenuOpen(false); onStartDemo(); }}
               >
                 <Sparkles size={18} />
                 <span>Tester la Démo interactive</span>
               </button>
+
               <button 
                 className="btn-hero-secondary" 
-                style={{ width: '100%' }}
+                style={{ width: '100%', justifyContent: 'center' }}
                 onClick={() => { setMobileMenuOpen(false); onOpenLogin(); }}
               >
+                <Lock size={16} color="#60a5fa" />
                 <span>Accès Espace Établissement</span>
+              </button>
+
+              <button 
+                className="btn-mobile-signup"
+                onClick={() => { setMobileMenuOpen(false); onOpenSignUp(); }}
+              >
+                <span>Créer un nouveau compte école →</span>
               </button>
             </div>
           </div>
-        )}
-      </header>
+        </div>
+      )}
 
       {/* --------------------------------------------------------------------
           HERO SECTION (Integrated Split 2-Column Showcase)
@@ -455,7 +547,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       {/* --------------------------------------------------------------------
           FEATURE SPOTLIGHT : GUICHET CAISSE & MOBILE MONEY
           -------------------------------------------------------------------- */}
-      <section className="spotlight-section">
+      <section id="guichet" className="spotlight-section">
         <div className="landing-container">
           <div className="spotlight-card">
             <div className="spotlight-grid">
@@ -700,7 +792,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       {/* --------------------------------------------------------------------
           COMPARATIVE TABLE
           -------------------------------------------------------------------- */}
-      <section className="comparison-section">
+      <section id="comparatif" className="comparison-section">
         <div className="landing-container">
           <div className="section-header">
             <span className="section-tag">Comparatif</span>
@@ -1078,7 +1170,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <div className="footer-col-title">Navigation</div>
               <ul className="footer-links">
                 <li><a className="footer-link" onClick={() => scrollToSection('features')}>Fonctionnalités</a></li>
+                <li><a className="footer-link" onClick={() => scrollToSection('guichet')}>Guichet Caisse</a></li>
                 <li><a className="footer-link" onClick={() => scrollToSection('how-it-works')}>Comment ça marche</a></li>
+                <li><a className="footer-link" onClick={() => scrollToSection('comparatif')}>Comparatif</a></li>
                 <li><a className="footer-link" onClick={() => scrollToSection('pricing')}>Tarifs</a></li>
               </ul>
             </div>
