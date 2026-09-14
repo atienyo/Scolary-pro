@@ -45,6 +45,17 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Track window scroll to enhance sticky navbar appearance
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -110,9 +121,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       <div className="landing-glow glow-3" />
 
       {/* --------------------------------------------------------------------
-          NAVBAR
+          NAVBAR (Sticky / Visible on Scroll)
           -------------------------------------------------------------------- */}
-      <header className="landing-nav">
+      <header className={`landing-nav ${isScrolled ? 'landing-nav-scrolled' : ''}`}>
         <div className="landing-container landing-nav-inner">
           {/* Logo Brand */}
           <a href="#" className="landing-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
