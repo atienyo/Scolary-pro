@@ -265,27 +265,27 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                 {/* Floating Badges overlaying the image */}
                 <div className="hero-floating-badge badge-top-left">
                   <div className="badge-icon-wrap" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981' }}>
-                    <CheckCircle2 size={20} />
+                    <CheckCircle2 size={18} />
                   </div>
-                  <div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Taux de recouvrement</div>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#10b981' }}>99.4% à date</div>
+                  <div className="badge-text-wrap">
+                    <span className="badge-label">Taux de recouvrement</span>
+                    <span className="badge-value" style={{ color: '#10b981' }}>99.4% à date</span>
                   </div>
                 </div>
 
                 <div className="hero-floating-badge badge-bottom-right">
                   <div className="badge-icon-wrap" style={{ background: 'rgba(59, 91, 219, 0.25)', color: '#60a5fa' }}>
-                    <QrCode size={20} />
+                    <QrCode size={18} />
                   </div>
-                  <div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Reçus infalsifiables</div>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#ffffff' }}>QR Code Certifié</div>
+                  <div className="badge-text-wrap">
+                    <span className="badge-label">Reçus infalsifiables</span>
+                    <span className="badge-value" style={{ color: '#ffffff' }}>QR Code Certifié</span>
                   </div>
                 </div>
 
                 <div className="hero-image-caption-pill">
                   <span className="live-pulse-dot" />
-                  <span>Établissements partenaires en Côte d'Ivoire & Afrique</span>
+                  <span className="caption-pill-text">Établissements partenaires en Côte d'Ivoire & Afrique</span>
                 </div>
               </div>
             </div>
@@ -487,9 +487,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                     <div className="spotlight-badge-icon">
                       <Receipt size={18} />
                     </div>
-                    <div>
-                      <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Impression instantanée</div>
-                      <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#ffffff' }}>Ticket Thermique 80mm & A4</div>
+                    <div className="badge-text-wrap">
+                      <span className="spotlight-badge-label">Impression instantanée</span>
+                      <span className="spotlight-badge-val">Ticket Thermique 80mm & A4</span>
                     </div>
                   </div>
                 </div>
