@@ -25,8 +25,11 @@ import {
   Layers,
   PhoneCall,
   Mail,
-  Zap
+  Zap,
+  CheckCircle
 } from 'lucide-react';
+import heroBannerImg from '../assets/hero-banner.jpg';
+import cashierCounterImg from '../assets/cashier-counter.jpg';
 import './LandingPage.css';
 
 interface LandingPageViewProps {
@@ -244,89 +247,108 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           </div>
 
           {/* ----------------------------------------------------------------
-              HERO APP PREVIEW MOCKUP
+              HERO VISUAL SHOWCASE & APP PREVIEW MOCKUP
               ---------------------------------------------------------------- */}
-          <div className="hero-preview-wrapper">
-            {/* Floating Badges */}
-            <div className="floating-badge floating-badge-top-left">
-              <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
-                <CheckCircle2 size={20} />
+          <div className="hero-showcase-container">
+            {/* Visual Realistic Hero Image Banner */}
+            <div className="hero-image-banner-wrapper">
+              <div className="hero-image-frame">
+                <img 
+                  src={heroBannerImg} 
+                  alt="Gestion financière et scolarité moderne en Afrique de l'Ouest" 
+                  className="hero-image"
+                  loading="eager"
+                />
+                <div className="hero-image-gradient-overlay" />
+                <div className="hero-image-caption-pill">
+                  <span className="live-pulse-dot" />
+                  <span>Établissements partenaires en Côte d'Ivoire & Afrique de l'Ouest</span>
+                </div>
               </div>
-              <div>
-                <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Taux de recouvrement</div>
-                <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#10b981' }}>99.4% à date</div>
-              </div>
-            </div>
 
-            <div className="floating-badge floating-badge-bottom-right">
-              <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(59, 91, 219, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60a5fa' }}>
-                <QrCode size={20} />
+              {/* Floating badges on the visual hero banner */}
+              <div className="floating-badge hero-badge-top-left">
+                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
+                  <CheckCircle2 size={20} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Taux de recouvrement</div>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#10b981' }}>99.4% à date</div>
+                </div>
               </div>
-              <div>
-                <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Reçus infalsifiables</div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#ffffff' }}>QR Code Certifié</div>
+
+              <div className="floating-badge hero-badge-bottom-right">
+                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(59, 91, 219, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60a5fa' }}>
+                  <QrCode size={20} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Reçus infalsifiables</div>
+                  <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#ffffff' }}>QR Code Certifié</div>
+                </div>
               </div>
             </div>
 
             {/* Interactive Mockup Dashboard Card */}
-            <div className="hero-preview-card" onClick={onStartDemo} style={{ cursor: 'pointer' }} title="Cliquez pour tester la démo en direct">
-              <div className="mockup-header-bar">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <div className="mockup-dots">
-                    <div className="mockup-dot mockup-dot-red" />
-                    <div className="mockup-dot mockup-dot-yellow" />
-                    <div className="mockup-dot mockup-dot-green" />
+            <div className="hero-preview-wrapper">
+              <div className="hero-preview-card" onClick={onStartDemo} style={{ cursor: 'pointer' }} title="Cliquez pour tester la démo en direct">
+                <div className="mockup-header-bar">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div className="mockup-dots">
+                      <div className="mockup-dot mockup-dot-red" />
+                      <div className="mockup-dot mockup-dot-yellow" />
+                      <div className="mockup-dot mockup-dot-green" />
+                    </div>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
+                      https://scolarpay.pro/dashboard/lycee-saint-joseph
+                    </span>
                   </div>
-                  <span style={{ fontSize: '0.75rem', color: '#64748b', fontFamily: 'var(--font-mono)' }}>
-                    https://scolarpay.pro/dashboard/lycee-saint-joseph
-                  </span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#1e1b4b', padding: '0.25rem 0.65rem', borderRadius: '6px', fontSize: '0.72rem', color: '#a5b4fc', fontWeight: 600 }}>
-                  <Sparkles size={13} />
-                  <span>Session Démo Live</span>
-                </div>
-              </div>
-
-              {/* KPI metrics row inside mockup */}
-              <div className="mockup-stats-grid">
-                <div className="mockup-stat-box" style={{ borderLeft: '3px solid #3b5bdb' }}>
-                  <div className="mockup-stat-label">Total Recouvré Annuel</div>
-                  <div className="mockup-stat-val">117 000 000 F</div>
-                  <div style={{ fontSize: '0.68rem', color: '#10b981', marginTop: '4px', fontWeight: 600 }}>↑ +14% vs N-1</div>
-                </div>
-
-                <div className="mockup-stat-box" style={{ borderLeft: '3px solid #10b981' }}>
-                  <div className="mockup-stat-label">Encaissé Aujourd'hui</div>
-                  <div className="mockup-stat-val">1 425 000 F</div>
-                  <div style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '4px' }}>18 reçus émis</div>
-                </div>
-
-                <div className="mockup-stat-box" style={{ borderLeft: '3px solid #f59e0b' }}>
-                  <div className="mockup-stat-label">Solde en Attente</div>
-                  <div className="mockup-stat-val">12 450 000 F</div>
-                  <div style={{ fontSize: '0.68rem', color: '#f59e0b', marginTop: '4px' }}>42 élèves relancés</div>
-                </div>
-
-                <div className="mockup-stat-box" style={{ borderLeft: '3px solid #0ea5e9' }}>
-                  <div className="mockup-stat-label">Effectif Actif</div>
-                  <div className="mockup-stat-val">650 Élèves</div>
-                  <div style={{ fontSize: '0.68rem', color: '#0ea5e9', marginTop: '4px' }}>24 classes configurées</div>
-                </div>
-              </div>
-
-              {/* Mini Action bar preview */}
-              <div style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#3b5bdb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-                    <Coins size={16} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>Guichet Caisse Rapide Actif</div>
-                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Dernier encaissement : KOUASSI Jean-Eudes (3ème A) • 50 000 F (Wave)</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#1e1b4b', padding: '0.25rem 0.65rem', borderRadius: '6px', fontSize: '0.72rem', color: '#a5b4fc', fontWeight: 600 }}>
+                    <Sparkles size={13} />
+                    <span>Session Démo Live</span>
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#60a5fa', fontWeight: 600 }}>Cliquer pour explorer l'interface →</span>
+
+                {/* KPI metrics row inside mockup */}
+                <div className="mockup-stats-grid">
+                  <div className="mockup-stat-box" style={{ borderLeft: '3px solid #3b5bdb' }}>
+                    <div className="mockup-stat-label">Total Recouvré Annuel</div>
+                    <div className="mockup-stat-val">117 000 000 F</div>
+                    <div style={{ fontSize: '0.68rem', color: '#10b981', marginTop: '4px', fontWeight: 600 }}>↑ +14% vs N-1</div>
+                  </div>
+
+                  <div className="mockup-stat-box" style={{ borderLeft: '3px solid #10b981' }}>
+                    <div className="mockup-stat-label">Encaissé Aujourd'hui</div>
+                    <div className="mockup-stat-val">1 425 000 F</div>
+                    <div style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '4px' }}>18 reçus émis</div>
+                  </div>
+
+                  <div className="mockup-stat-box" style={{ borderLeft: '3px solid #f59e0b' }}>
+                    <div className="mockup-stat-label">Solde en Attente</div>
+                    <div className="mockup-stat-val">12 450 000 F</div>
+                    <div style={{ fontSize: '0.68rem', color: '#f59e0b', marginTop: '4px' }}>42 élèves relancés</div>
+                  </div>
+
+                  <div className="mockup-stat-box" style={{ borderLeft: '3px solid #0ea5e9' }}>
+                    <div className="mockup-stat-label">Effectif Actif</div>
+                    <div className="mockup-stat-val">650 Élèves</div>
+                    <div style={{ fontSize: '0.68rem', color: '#0ea5e9', marginTop: '4px' }}>24 classes configurées</div>
+                  </div>
+                </div>
+
+                {/* Mini Action bar preview */}
+                <div style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#3b5bdb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                      <Coins size={16} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>Guichet Caisse Rapide Actif</div>
+                      <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>Dernier encaissement : KOUASSI Jean-Eudes (3ème A) • 50 000 F (Wave)</div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#60a5fa', fontWeight: 600 }}>Cliquer pour explorer l'interface →</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -438,6 +460,91 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <p className="feature-desc">
                 Accès cloisonné pour Directeurs, Économes et Caissiers. Données sauvegardées en temps réel sur le Cloud avec mode de secours local.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --------------------------------------------------------------------
+          FEATURE SPOTLIGHT : GUICHET CAISSE & MOBILE MONEY
+          -------------------------------------------------------------------- */}
+      <section className="spotlight-section">
+        <div className="landing-container">
+          <div className="spotlight-card">
+            <div className="spotlight-grid">
+              {/* Media Col Left */}
+              <div className="spotlight-media-col">
+                <div className="spotlight-image-wrapper">
+                  <img 
+                    src={cashierCounterImg} 
+                    alt="Guichet caisse scolaire moderne avec paiement Mobile Money et impression de reçu thermique" 
+                    className="spotlight-image"
+                    loading="lazy"
+                  />
+                  <div className="spotlight-badge-overlay">
+                    <div className="spotlight-badge-icon">
+                      <Receipt size={18} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Impression instantanée</div>
+                      <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#ffffff' }}>Ticket Thermique 80mm & A4</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content Col Right */}
+              <div className="spotlight-content-col">
+                <div className="section-tag" style={{ display: 'inline-flex', marginBottom: '1rem', width: 'fit-content' }}>
+                  <Sparkles size={13} style={{ marginRight: '6px' }} /> Réalité du Terrain au Guichet
+                </div>
+                <h3 className="spotlight-title">
+                  Un guichet fluide, des parents rassurés et <span className="hero-title-gradient">zéro litige financier</span>
+                </h3>
+                <p className="spotlight-desc">
+                  Transformez la période des inscriptions et paiements de tranches. Vos caissiers et économes enregistrent les règlements en un éclair avec confirmation et reçu certifié immédiat.
+                </p>
+
+                <div className="spotlight-benefits-list">
+                  <div className="spotlight-benefit-item">
+                    <div className="spotlight-benefit-icon" style={{ background: 'rgba(59, 91, 219, 0.18)', color: '#60a5fa' }}>
+                      <Zap size={18} />
+                    </div>
+                    <div>
+                      <div className="spotlight-benefit-title">Encaissement en 15 secondes chrono</div>
+                      <div className="spotlight-benefit-text">Recherche instantanée de l'élève par nom ou matricule, sélection de la tranche due et calcul automatique de la monnaie à rendre.</div>
+                    </div>
+                  </div>
+
+                  <div className="spotlight-benefit-item">
+                    <div className="spotlight-benefit-icon" style={{ background: 'rgba(16, 185, 129, 0.18)', color: '#34d399' }}>
+                      <Smartphone size={18} />
+                    </div>
+                    <div>
+                      <div className="spotlight-benefit-title">Mobile Money & Espèces unifiés</div>
+                      <div className="spotlight-benefit-text">Acceptez Wave, Orange Money, MTN MoMo, Moov Money, chèques et espèces avec saisie instantanée des références de transaction.</div>
+                    </div>
+                  </div>
+
+                  <div className="spotlight-benefit-item">
+                    <div className="spotlight-benefit-icon" style={{ background: 'rgba(168, 85, 247, 0.18)', color: '#c084fc' }}>
+                      <QrCode size={18} />
+                    </div>
+                    <div>
+                      <div className="spotlight-benefit-title">Reçus certifiés avec QR Code infalsifiable</div>
+                      <div className="spotlight-benefit-text">Fini les faux reçus et reçus manuscrits illisibles. Chaque reçu dispose d'un identifiant cryptographique unique vérifiable par la Direction.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '2rem' }}>
+                  <button className="btn-hero-primary" onClick={onStartDemo}>
+                    <Sparkles size={18} />
+                    <span>Tester le Guichet Caisse en Démo</span>
+                    <ArrowRight size={18} />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
