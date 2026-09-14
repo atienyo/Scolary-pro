@@ -127,9 +127,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           {/* Desktop Nav Links */}
           <nav className="landing-nav-links">
             <a className="landing-nav-link" onClick={() => scrollToSection('features')}>Fonctionnalités</a>
-            <a className="landing-nav-link" onClick={() => scrollToSection('guichet')}>Guichet Caisse</a>
             <a className="landing-nav-link" onClick={() => scrollToSection('how-it-works')}>Comment ça marche</a>
-            <a className="landing-nav-link" onClick={() => scrollToSection('comparatif')}>Comparatif</a>
             <a className="landing-nav-link" onClick={() => scrollToSection('pricing')}>Tarifs</a>
           </nav>
 
@@ -188,19 +186,6 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                 <ArrowRight size={16} className="drawer-arrow" />
               </a>
 
-              <a className="mobile-drawer-link" onClick={() => scrollToSection('guichet')}>
-                <div className="drawer-link-left">
-                  <div className="drawer-icon-box" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#34d399' }}>
-                    <Coins size={18} />
-                  </div>
-                  <div>
-                    <span className="drawer-link-title">Guichet Caisse & Reçus</span>
-                    <span className="drawer-link-sub">Espèces, Wave, Orange, MTN MoMo</span>
-                  </div>
-                </div>
-                <ArrowRight size={16} className="drawer-arrow" />
-              </a>
-
               <a className="mobile-drawer-link" onClick={() => scrollToSection('how-it-works')}>
                 <div className="drawer-link-left">
                   <div className="drawer-icon-box" style={{ background: 'rgba(168, 85, 247, 0.15)', color: '#c084fc' }}>
@@ -209,19 +194,6 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                   <div>
                     <span className="drawer-link-title">Comment ça marche</span>
                     <span className="drawer-link-sub">Prise en main en 3 étapes simples</span>
-                  </div>
-                </div>
-                <ArrowRight size={16} className="drawer-arrow" />
-              </a>
-
-              <a className="mobile-drawer-link" onClick={() => scrollToSection('comparatif')}>
-                <div className="drawer-link-left">
-                  <div className="drawer-icon-box" style={{ background: 'rgba(14, 165, 233, 0.15)', color: '#38bdf8' }}>
-                    <BarChart3 size={18} />
-                  </div>
-                  <div>
-                    <span className="drawer-link-title">Comparatif ScolarPay</span>
-                    <span className="drawer-link-sub">vs Cahiers et tableurs Excel</span>
                   </div>
                 </div>
                 <ArrowRight size={16} className="drawer-arrow" />
@@ -1170,9 +1142,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <div className="footer-col-title">Navigation</div>
               <ul className="footer-links">
                 <li><a className="footer-link" onClick={() => scrollToSection('features')}>Fonctionnalités</a></li>
-                <li><a className="footer-link" onClick={() => scrollToSection('guichet')}>Guichet Caisse</a></li>
                 <li><a className="footer-link" onClick={() => scrollToSection('how-it-works')}>Comment ça marche</a></li>
-                <li><a className="footer-link" onClick={() => scrollToSection('comparatif')}>Comparatif</a></li>
                 <li><a className="footer-link" onClick={() => scrollToSection('pricing')}>Tarifs</a></li>
               </ul>
             </div>
