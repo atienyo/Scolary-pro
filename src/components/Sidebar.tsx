@@ -9,7 +9,8 @@ import {
   GraduationCap, 
   Sliders,
   DollarSign,
-  Layers
+  Layers,
+  X
 } from 'lucide-react';
 import { SchoolConfig } from '../types';
 
@@ -18,6 +19,8 @@ interface SidebarProps {
   setCurrentTab: (tab: string) => void;
   schoolConfig: SchoolConfig;
   overdueCount: number;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -25,6 +28,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setCurrentTab,
   schoolConfig,
   overdueCount,
+  isMobileOpen = false,
+  onCloseMobile,
 }) => {
   const navItems = [
     {
@@ -68,69 +73,84 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="sidebar no-print" style={{
-      width: '270px',
-      background: 'var(--bg-sidebar)',
-      color: '#fff',
-      display: 'flex',
-      flexDirection: 'column',
-      flexShrink: 0,
-      borderRight: '1px solid rgba(255, 255, 255, 0.08)',
-      zIndex: 20
-    }}>
+    <aside className={`sidebar no-print ${isMobileOpen ? 'mobile-open' : ''}`}>
       {/* Brand Header */}
       <div style={{
-        padding: '1.5rem 1.4rem',
+        padding: '1.25rem 1.25rem',
         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         display: 'flex',
         alignItems: 'center',
-        gap: '0.85rem'
+        justifyContent: 'space-between',
+        gap: '0.75rem'
       }}>
-        <div style={{
-          width: '42px',
-          height: '42px',
-          borderRadius: '12px',
-          background: 'linear-gradient(135deg, #3b5bdb 0%, #0ea5e9 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 12px rgba(59, 91, 219, 0.4)'
-        }}>
-          <GraduationCap size={24} color="#fff" />
-        </div>
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
-            fontFamily: 'var(--font-heading)',
-            fontWeight: 800,
-            fontSize: '1.2rem',
-            letterSpacing: '-0.02em',
-            background: 'linear-gradient(to right, #ffffff, #93c5fd)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            width: '40px',
+            height: '40px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #3b5bdb 0%, #0ea5e9 100%)',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.35rem'
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(59, 91, 219, 0.4)',
+            flexShrink: 0
           }}>
-            ScolarPay <span style={{ 
-              fontSize: '0.65rem', 
-              background: '#3b5bdb', 
-              color: '#fff', 
-              padding: '2px 6px', 
-              borderRadius: '4px',
-              WebkitTextFillColor: '#fff',
-              letterSpacing: '0.05em'
-            }}>PRO</span>
+            <GraduationCap size={22} color="#fff" />
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-            Collèges & Lycées SaaS
+          <div>
+            <div style={{
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 800,
+              fontSize: '1.15rem',
+              letterSpacing: '-0.02em',
+              background: 'linear-gradient(to right, #ffffff, #93c5fd)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem'
+            }}>
+              ScolarPay <span style={{ 
+                fontSize: '0.62rem', 
+                background: '#3b5bdb', 
+                color: '#fff', 
+                padding: '2px 5px', 
+                borderRadius: '4px',
+                WebkitTextFillColor: '#fff',
+                letterSpacing: '0.05em'
+              }}>PRO</span>
+            </div>
+            <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>
+              Collèges & Lycées SaaS
+            </div>
           </div>
         </div>
+
+        {/* Mobile Close Drawer Button */}
+        {onCloseMobile && (
+          <button
+            onClick={onCloseMobile}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
+              background: 'rgba(255, 255, 255, 0.08)',
+              color: '#cbd5e1',
+            }}
+            aria-label="Fermer le menu"
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
 
       {/* School Badge Active */}
       <div style={{
-        margin: '1.1rem 1.1rem 0.5rem 1.1rem',
-        padding: '0.85rem 1rem',
+        margin: '1rem 1rem 0.5rem 1rem',
+        padding: '0.8rem 0.9rem',
         background: 'rgba(255, 255, 255, 0.05)',
         borderRadius: 'var(--radius-md)',
         border: '1px solid rgba(255, 255, 255, 0.07)',
@@ -146,7 +166,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#60a5fa'
+          color: '#60a5fa',
+          flexShrink: 0
         }}>
           <School size={18} />
         </div>
@@ -168,7 +189,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Navigation Links */}
-      <div style={{ padding: '1rem 0.75rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+      <div style={{ padding: '0.75rem 0.65rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.3rem', overflowY: 'auto' }}>
         <div style={{ 
           fontSize: '0.68rem', 
           textTransform: 'uppercase', 
@@ -186,7 +207,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
           return (
             <button
               key={item.id}
-              onClick={() => setCurrentTab(item.id)}
+              onClick={() => {
+                setCurrentTab(item.id);
+                if (onCloseMobile) onCloseMobile();
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -239,7 +263,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Footer info & Security stamp */}
       <div style={{
-        padding: '1.1rem',
+        padding: '1rem',
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
         background: 'rgba(0, 0, 0, 0.2)',
         fontSize: '0.75rem',

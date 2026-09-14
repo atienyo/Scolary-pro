@@ -15,7 +15,8 @@ import {
   LogOut,
   KeyRound,
   ChevronDown,
-  User
+  User,
+  Menu
 } from 'lucide-react';
 import { SchoolConfig, UserRole, AuthUser } from '../types';
 
@@ -30,6 +31,7 @@ interface HeaderProps {
   onLogout?: () => void;
   onOpenChangePassword?: () => void;
   isSupabaseConnected?: boolean;
+  onToggleMobileSidebar?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -43,6 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   onLogout,
   onOpenChangePassword,
   isSupabaseConnected = false,
+  onToggleMobileSidebar,
 }) => {
   const [time, setTime] = useState<string>('');
   const [dateStr, setDateStr] = useState<string>('');
@@ -89,21 +92,33 @@ export const Header: React.FC<HeaderProps> = ({
   );
 
   return (
-    <header className="header no-print" style={{
-      height: '70px',
-      background: '#ffffff',
-      borderBottom: '1px solid var(--border-color)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 2rem',
-      position: 'sticky',
-      top: 0,
-      zIndex: 10,
-      boxShadow: '0 1px 3px rgba(0,0,0,0.02)'
-    }}>
-      {/* Left: Quick search input */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', width: '380px' }}>
+    <header className="header no-print">
+      {/* Left: Mobile Toggle & Quick search input */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, maxWidth: '420px', minWidth: 0 }}>
+        {/* Mobile Hamburger Menu button */}
+        {onToggleMobileSidebar && (
+          <button
+            onClick={onToggleMobileSidebar}
+            className="mobile-sidebar-toggle"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '38px',
+              height: '38px',
+              borderRadius: '8px',
+              background: '#f1f5f9',
+              border: '1px solid var(--border-color)',
+              color: 'var(--text-primary)',
+              flexShrink: 0,
+              cursor: 'pointer'
+            }}
+            aria-label="Ouvrir le menu latéral"
+          >
+            <Menu size={20} />
+          </button>
+        )}
+
         <div style={{
           position: 'relative',
           width: '100%',
@@ -111,21 +126,21 @@ export const Header: React.FC<HeaderProps> = ({
           alignItems: 'center'
         }}>
           <Search 
-            size={17} 
+            size={16} 
             color="var(--text-muted)" 
-            style={{ position: 'absolute', left: '0.85rem' }} 
+            style={{ position: 'absolute', left: '0.75rem' }} 
           />
           <input
             type="text"
-            placeholder="Rechercher élève (Matricule, Nom, Classe)..."
+            placeholder="Rechercher élève..."
             onChange={(e) => onQuickSearch(e.target.value)}
             style={{
               width: '100%',
-              padding: '0.55rem 0.9rem 0.55rem 2.4rem',
+              padding: '0.5rem 0.8rem 0.5rem 2.2rem',
               borderRadius: 'var(--radius-full)',
               border: '1px solid var(--border-color)',
               background: '#f8fafc',
-              fontSize: '0.85rem',
+              fontSize: '0.825rem',
               transition: 'all 0.2s ease',
             }}
             onFocus={(e) => {
@@ -143,65 +158,69 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Right: Live time, Role Switcher, Quick Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        {/* Database Status Indicator */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.45rem',
-          background: isSupabaseConnected ? '#ecfdf5' : '#f8fafc',
-          border: `1px solid ${isSupabaseConnected ? '#a7f3d0' : 'var(--border-color)'}`,
-          borderRadius: 'var(--radius-full)',
-          padding: '0.35rem 0.75rem',
-          fontSize: '0.75rem',
-          fontWeight: 600,
-          color: isSupabaseConnected ? '#065f46' : 'var(--text-muted)'
-        }}
-        title={isSupabaseConnected ? 'Connecté à Supabase Cloud DB' : 'Mode Local'}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        {/* Database Status Indicator - Compact on mobile */}
+        <div 
+          className="header-db-badge"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            background: isSupabaseConnected ? '#ecfdf5' : '#f8fafc',
+            border: `1px solid ${isSupabaseConnected ? '#a7f3d0' : 'var(--border-color)'}`,
+            borderRadius: 'var(--radius-full)',
+            padding: '0.35rem 0.65rem',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            color: isSupabaseConnected ? '#065f46' : 'var(--text-muted)'
+          }}
+          title={isSupabaseConnected ? 'Connecté à Supabase Cloud DB' : 'Mode Local'}
         >
           <Database size={13} color={isSupabaseConnected ? '#10b981' : 'var(--text-muted)'} />
-          <span>{isSupabaseConnected ? 'Supabase Connecté' : 'Mode Local'}</span>
+          <span className="hide-on-mobile">{isSupabaseConnected ? 'Supabase' : 'Local'}</span>
           {isSupabaseConnected && <CheckCircle2 size={12} color="#10b981" />}
         </div>
 
-        {/* Clock & Date Badge */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.75rem',
-          background: '#f8fafc',
-          border: '1px solid var(--border-color)',
-          borderRadius: 'var(--radius-md)',
-          padding: '0.4rem 0.8rem',
-          fontSize: '0.8rem',
-          color: 'var(--text-secondary)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <Calendar size={14} color="var(--primary)" />
+        {/* Clock & Date Badge - Hidden on mobile screen */}
+        <div 
+          className="hide-on-mobile"
+          style={{
+            alignItems: 'center',
+            gap: '0.65rem',
+            background: '#f8fafc',
+            border: '1px solid var(--border-color)',
+            borderRadius: 'var(--radius-md)',
+            padding: '0.35rem 0.75rem',
+            fontSize: '0.78rem',
+            color: 'var(--text-secondary)'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+            <Calendar size={13} color="var(--primary)" />
             <span style={{ textTransform: 'capitalize' }}>{dateStr}</span>
           </div>
           <span style={{ color: 'var(--border-color)' }}>|</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-primary)' }}>
-            <Clock size={14} color="#10b981" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--text-primary)' }}>
+            <Clock size={13} color="#10b981" />
             <span>{time}</span>
           </div>
         </div>
 
-        {/* Arrêté de Caisse journalier */}
+        {/* Arrêté de Caisse journalier - Hidden on small mobile */}
         <button
           onClick={onOpenDailyRegister}
-          className="btn btn-secondary"
+          className="btn btn-secondary hide-on-mobile"
           style={{
-            fontSize: '0.825rem',
-            padding: '0.5rem 0.85rem',
+            fontSize: '0.8rem',
+            padding: '0.45rem 0.75rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.45rem'
+            gap: '0.4rem'
           }}
           title="Consulter le journal et l'arrêté de caisse journalier"
         >
           <FileSpreadsheet size={15} color="var(--primary)" />
-          <span>Arrêté de Caisse</span>
+          <span>Arrêté</span>
         </button>
 
         {/* Fast Cashier Button */}
@@ -209,19 +228,20 @@ export const Header: React.FC<HeaderProps> = ({
           onClick={onOpenCashier}
           className="btn btn-primary"
           style={{
-            fontSize: '0.825rem',
-            padding: '0.5rem 0.95rem',
+            fontSize: '0.8rem',
+            padding: '0.45rem 0.8rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.45rem'
+            gap: '0.4rem',
+            whiteSpace: 'nowrap'
           }}
         >
-          <Coins size={16} />
-          <span>Nouvel Encaissement</span>
+          <Coins size={15} />
+          <span className="hide-on-mobile">Encaissement</span>
         </button>
 
         {/* User Profile & Menu Area */}
-        <div ref={menuRef} style={{ position: 'relative', borderLeft: '1px solid var(--border-color)', paddingLeft: '1rem', marginLeft: '0.25rem' }}>
+        <div ref={menuRef} style={{ position: 'relative', borderLeft: '1px solid var(--border-color)', paddingLeft: '0.65rem', marginLeft: '0.1rem' }}>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             style={{

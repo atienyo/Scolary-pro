@@ -118,7 +118,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   return (
     <div className="page-wrapper">
       {/* Welcome Title */}
-      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="view-header-flex">
         <div>
           <h1 style={{ fontSize: '1.85rem', fontWeight: 800 }}>Tableau de Bord Financier</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -126,7 +126,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button
             onClick={() => onNavigateToTab('cashier')}
             className="btn btn-primary"
@@ -139,12 +139,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Top 4 KPI Metric Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '1.25rem',
-        marginBottom: '1.75rem'
-      }}>
+      <div className="kpi-grid-4">
         {/* Card 1: Total Attendu */}
         <div className="card" style={{ padding: '1.25rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
@@ -272,8 +267,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: '280px' }}>
             <div style={{
               width: '36px',
               height: '36px',
@@ -314,7 +311,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       )}
 
       {/* Grid: Level Breakdown + Payment Methods */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '1.5rem', marginBottom: '1.75rem' }}>
+      <div className="dashboard-split-grid">
         
         {/* Level Performance: Collège vs Lycée */}
         <div className="card">

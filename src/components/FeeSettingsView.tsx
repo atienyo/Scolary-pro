@@ -215,7 +215,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
   return (
     <div className="page-wrapper">
       {/* Top Title */}
-      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="view-header-flex">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
             <span style={{
@@ -239,7 +239,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button
             onClick={() => setShowAddClassModal(true)}
             className="btn btn-secondary"
@@ -281,7 +281,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
       )}
 
       {/* Main Grid: Class Selector on Left & Plan Editor on Right */}
-      <div style={{ display: 'grid', gridTemplateColumns: '310px 1fr', gap: '1.5rem', alignItems: 'start' }}>
+      <div className="fees-split-grid">
         
         {/* Left: Classes List */}
         <div className="card">

@@ -60,7 +60,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
   return (
     <div className="page-wrapper">
       {/* Top Title */}
-      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="view-header-flex">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
             <span style={{
@@ -122,7 +122,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
 
       {/* Main Settings Form Card */}
       <div className="card" style={{ maxWidth: '960px', boxShadow: 'var(--shadow-md)' }}>
-        <form onSubmit={handleSubmit} style={{ padding: '2rem' }}>
+        <form onSubmit={handleSubmit} style={{ padding: '1.5rem' }}>
           
           {/* Section 1: Identité de l'école */}
           <div style={{ marginBottom: '2rem' }}>
@@ -140,7 +140,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </h3>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Nom Complet de l'Établissement *</label>
                 <input
@@ -168,7 +168,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Devise / Slogan de l'École</label>
                 <input
@@ -211,7 +211,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </h3>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Devise Monétaire Principale *</label>
                 <select
@@ -263,7 +263,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </h3>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Adresse Physique / Rue</label>
                 <input
@@ -298,7 +298,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Téléphone de Contact Guichet / Comptabilité *</label>
                 <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -348,7 +348,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </h3>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
               <div className="form-group" style={{ margin: 0 }}>
                 <label className="form-label">Nom du Directeur / Chef d'Établissement</label>
                 <input
@@ -405,7 +405,7 @@ export const SchoolSettingsView: React.FC<SchoolSettingsViewProps> = ({
               </h3>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
               {/* Logo Upload Box */}
               <div style={{
                 border: '1px dashed #cbd5e1',

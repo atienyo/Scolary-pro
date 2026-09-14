@@ -32,7 +32,7 @@ import { calculateStudentFinancials, formatCurrency } from './utils/formatters';
 import { supabaseService } from './services/supabaseService';
 import { authService } from './services/authService';
 import { realtimeService } from './services/realtimeService';
-import { Zap, CheckCircle2, Sparkles, X } from 'lucide-react';
+import { Zap, CheckCircle2, Sparkles, X, LayoutDashboard, DollarSign, Users, AlertTriangle, Menu } from 'lucide-react';
 
 export function App() {
   // Authentication & Public View State
@@ -41,6 +41,7 @@ export function App() {
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
   const [showChangePassword, setShowChangePassword] = useState<boolean>(false);
   const [liveNotification, setLiveNotification] = useState<{ title: string; subtitle: string; amount?: number } | null>(null);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
   // Application state with localStorage cache fallbacks
   const [schoolConfig, setSchoolConfig] = useState<SchoolConfig>(() => {
@@ -353,12 +354,21 @@ export function App() {
 
   return (
     <div className="app-container">
-      {/* Sidebar Navigation */}
+      {/* Mobile Sidebar Backdrop Overlay */}
+      <div 
+        className={`sidebar-backdrop ${isMobileSidebarOpen ? 'active' : ''}`} 
+        onClick={() => setIsMobileSidebarOpen(false)} 
+        aria-hidden="true"
+      />
+
+      {/* Sidebar Navigation (Desktop Static & Mobile Off-canvas Drawer) */}
       <Sidebar
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
         schoolConfig={schoolConfig}
         overdueCount={overdueCount}
+        isMobileOpen={isMobileSidebarOpen}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
       />
 
       {/* Main App Canvas */}
@@ -369,6 +379,7 @@ export function App() {
           setCurrentRole={setCurrentRole}
           currentUser={currentUser}
           isSupabaseConnected={supabaseService.isConfigured()}
+          onToggleMobileSidebar={() => setIsMobileSidebarOpen(prev => !prev)}
           onOpenCashier={() => setCurrentTab('cashier')}
           onOpenDailyRegister={() => setShowDailyRegister(true)}
           onQuickSearch={(query) => {
@@ -449,6 +460,74 @@ export function App() {
         )}
       </main>
 
+      {/* Mobile Bottom Navigation Bar (Phones & Tablets) */}
+      <nav className="mobile-bottom-nav no-print" aria-label="Navigation mobile">
+        <button
+          className={`mobile-nav-item ${currentTab === 'dashboard' ? 'active' : ''}`}
+          onClick={() => {
+            setCurrentTab('dashboard');
+            setIsMobileSidebarOpen(false);
+          }}
+        >
+          <div className="nav-icon-wrapper">
+            <LayoutDashboard size={18} />
+          </div>
+          <span>Accueil</span>
+        </button>
+
+        <button
+          className={`mobile-nav-item ${currentTab === 'cashier' ? 'active' : ''}`}
+          onClick={() => {
+            setCurrentTab('cashier');
+            setIsMobileSidebarOpen(false);
+          }}
+        >
+          <div className="nav-icon-wrapper">
+            <DollarSign size={18} />
+          </div>
+          <span>Caisse</span>
+        </button>
+
+        <button
+          className={`mobile-nav-item ${currentTab === 'students' ? 'active' : ''}`}
+          onClick={() => {
+            setCurrentTab('students');
+            setIsMobileSidebarOpen(false);
+          }}
+        >
+          <div className="nav-icon-wrapper">
+            <Users size={18} />
+          </div>
+          <span>Élèves</span>
+        </button>
+
+        <button
+          className={`mobile-nav-item ${currentTab === 'overdue' ? 'active' : ''}`}
+          onClick={() => {
+            setCurrentTab('overdue');
+            setIsMobileSidebarOpen(false);
+          }}
+        >
+          <div className="nav-icon-wrapper">
+            <AlertTriangle size={18} />
+          </div>
+          <span>Impayés</span>
+          {overdueCount > 0 && (
+            <span className="mobile-nav-badge">{overdueCount}</span>
+          )}
+        </button>
+
+        <button
+          className={`mobile-nav-item ${isMobileSidebarOpen || currentTab === 'fees' || currentTab === 'settings' ? 'active' : ''}`}
+          onClick={() => setIsMobileSidebarOpen(prev => !prev)}
+        >
+          <div className="nav-icon-wrapper">
+            <Menu size={18} />
+          </div>
+          <span>Menu</span>
+        </button>
+      </nav>
+
       {/* Official Receipt Modal */}
       {activeReceipt && (
         <ReceiptModal
@@ -496,8 +575,9 @@ export function App() {
       {liveNotification && (
         <div style={{
           position: 'fixed',
-          bottom: '2rem',
-          right: '2rem',
+          bottom: '5rem',
+          right: '1rem',
+          left: '1rem',
           zIndex: 99999,
           background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
           color: '#ffffff',
@@ -508,11 +588,12 @@ export function App() {
           alignItems: 'center',
           gap: '1rem',
           maxWidth: '420px',
+          margin: '0 auto',
           animation: 'fadeIn 0.3s ease-out'
         }}>
           <div style={{
-            width: '42px',
-            height: '42px',
+            width: '40px',
+            height: '40px',
             borderRadius: '12px',
             background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
             display: 'flex',
@@ -520,14 +601,14 @@ export function App() {
             justifyContent: 'center',
             flexShrink: 0
           }}>
-            <Zap size={22} color="#facc15" />
+            <Zap size={20} color="#facc15" />
           </div>
 
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <span>{liveNotification.title}</span>
+              <span style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{liveNotification.title}</span>
             </div>
-            <div style={{ fontSize: '0.78rem', color: '#cbd5e1', marginTop: '0.15rem' }}>
+            <div style={{ fontSize: '0.75rem', color: '#cbd5e1', marginTop: '0.15rem', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
               {liveNotification.subtitle}
             </div>
             {liveNotification.amount !== undefined && (

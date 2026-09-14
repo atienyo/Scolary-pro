@@ -115,7 +115,7 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
   return (
     <div className="page-wrapper">
       {/* Header & New Student Action */}
-      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="view-header-flex">
         <div>
           <h1 style={{ fontSize: '1.85rem', fontWeight: 800 }}>Annuaire & Scolarités des Élèves</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -123,7 +123,7 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button
             onClick={() => exportUtils.exportStudentsToCSV(filteredStudents, feePlans, payments, schoolConfig)}
             className="btn btn-secondary"
@@ -147,7 +147,7 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
 
       {/* Filters Bar Card */}
       <div className="card" style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '1rem', alignItems: 'center' }}>
+        <div className="filters-grid-4">
           
           {/* Search Input */}
           <div style={{ position: 'relative' }}>

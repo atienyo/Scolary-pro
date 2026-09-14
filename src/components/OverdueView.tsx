@@ -102,7 +102,7 @@ export const OverdueView: React.FC<OverdueViewProps> = ({
   return (
     <div className="page-wrapper">
       {/* Top Header */}
-      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="view-header-flex">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
             <span style={{
@@ -126,7 +126,7 @@ export const OverdueView: React.FC<OverdueViewProps> = ({
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button
             onClick={() => setActiveTab(activeTab === 'LIST' ? 'BATCH_REMINDERS' : 'LIST')}
             className="btn btn-primary"
@@ -159,12 +159,7 @@ export const OverdueView: React.FC<OverdueViewProps> = ({
       )}
 
       {/* Metrics Summary Strip */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '1.25rem',
-        marginBottom: '1.75rem'
-      }}>
+      <div className="kpi-grid-3">
         <div className="card" style={{ padding: '1.25rem', borderLeft: '4px solid #ef4444' }}>
           <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
             Montant Total des Arriérés Échus
@@ -212,7 +207,7 @@ export const OverdueView: React.FC<OverdueViewProps> = ({
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '2rem' }}>
+          <div className="dashboard-split-grid">
             <div>
               <div className="form-group">
                 <label className="form-label">Modèle de Message SMS / WhatsApp</label>

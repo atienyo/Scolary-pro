@@ -154,7 +154,7 @@ export const CashierView: React.FC<CashierViewProps> = ({
   return (
     <div className="page-wrapper">
       {/* Top Banner Header */}
-      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="view-header-flex">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
             <span style={{
@@ -180,7 +180,7 @@ export const CashierView: React.FC<CashierViewProps> = ({
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '380px 1fr', gap: '1.5rem', alignItems: 'start' }}>
+      <div className="cashier-split-grid">
         
         {/* Left Column: Student Selector & Ledger */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -446,7 +446,7 @@ export const CashierView: React.FC<CashierViewProps> = ({
               </div>
 
               {/* Payment Amount Input */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
                 <div className="form-group" style={{ margin: 0 }}>
                   <label className="form-label" style={{ fontSize: '0.9rem', color: '#0f172a' }}>
                     Montant à encaisser ({schoolConfig.currency}) *
@@ -496,7 +496,7 @@ export const CashierView: React.FC<CashierViewProps> = ({
                 <label className="form-label" style={{ marginBottom: '0.6rem', display: 'block' }}>
                   Moyen de règlement *
                 </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.65rem' }}>
                   {[
                     { id: 'WAVE', label: 'Wave Mobile', color: '#0284c7', bg: '#e0f2fe', icon: Smartphone },
                     { id: 'ORANGE_MONEY', label: 'Orange Money', color: '#ea580c', bg: '#ffedd5', icon: Smartphone },
