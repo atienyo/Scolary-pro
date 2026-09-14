@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import heroBannerImg from '../assets/hero-banner.jpg';
 import cashierCounterImg from '../assets/cashier-counter.jpg';
+import { LegalModal, LegalModalType } from './LegalModal';
 import './LandingPage.css';
 
 interface LandingPageViewProps {
@@ -46,6 +47,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [legalModalType, setLegalModalType] = useState<LegalModalType | null>(null);
 
   // Track window scroll to enhance sticky navbar appearance
   useEffect(() => {
@@ -1146,14 +1148,41 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <div>
               © {new Date().getFullYear()} ScolarPay Pro. Tous droits réservés.
             </div>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Confidentialité</a>
-              <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Conditions Générales</a>
-              <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Sécurité des Données</a>
+            <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+              <button 
+                onClick={() => setLegalModalType('PRIVACY')} 
+                style={{ color: '#94a3b8', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8rem', padding: 0 }}
+                className="footer-legal-link"
+              >
+                Confidentialité
+              </button>
+              <button 
+                onClick={() => setLegalModalType('TERMS')} 
+                style={{ color: '#94a3b8', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8rem', padding: 0 }}
+                className="footer-legal-link"
+              >
+                Conditions Générales
+              </button>
+              <button 
+                onClick={() => setLegalModalType('SECURITY')} 
+                style={{ color: '#94a3b8', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.8rem', padding: 0 }}
+                className="footer-legal-link"
+              >
+                Sécurité des Données
+              </button>
             </div>
           </div>
         </div>
       </footer>
+
+      {/* Legal Information Modal */}
+      {legalModalType && (
+        <LegalModal
+          type={legalModalType}
+          onClose={() => setLegalModalType(null)}
+          onSelectType={(newType) => setLegalModalType(newType)}
+        />
+      )}
     </div>
   );
 };

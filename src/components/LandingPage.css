@@ -1650,3 +1650,20 @@
     flex-direction: row;
   }
 }
+
+.footer-legal-link {
+  color: #64748b;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.footer-legal-link:hover,
+.footer-legal-link:focus-visible {
+  color: #60a5fa !important;
+  text-decoration: underline !important;
+}
