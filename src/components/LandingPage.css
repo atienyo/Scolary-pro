@@ -270,18 +270,45 @@
 }
 
 /* --------------------------------------------------------------------------
-   HERO SECTION
+   HERO SECTION (Split 2-Column Integrated Layout)
    -------------------------------------------------------------------------- */
 .landing-hero {
-  padding: 3rem 0 4rem;
+  padding: 2.5rem 0 3.5rem;
   position: relative;
   z-index: 1;
-  text-align: center;
 }
 
 @media (min-width: 992px) {
   .landing-hero {
-    padding: 5rem 0 6rem;
+    padding: 4.5rem 0 5.5rem;
+  }
+}
+
+.hero-split-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  .hero-split-grid {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 3.5rem;
+    text-align: left;
+  }
+}
+
+.hero-content-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .hero-content-col {
+    align-items: flex-start;
   }
 }
 
@@ -296,19 +323,16 @@
   color: #93c5fd;
   font-size: 0.825rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .hero-title {
-  font-size: clamp(2rem, 5vw + 1rem, 3.75rem);
+  font-size: clamp(2rem, 3.8vw + 0.5rem, 3.4rem);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.03em;
   color: #ffffff;
-  margin-bottom: 1.35rem;
-  max-width: 920px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 1.25rem;
 }
 
 .hero-title-gradient {
@@ -318,11 +342,10 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(0.95rem, 1.4vw, 1.125rem);
   color: #94a3b8;
   line-height: 1.6;
-  max-width: 720px;
-  margin: 0 auto 2.25rem;
+  margin-bottom: 2rem;
 }
 
 /* Hero CTAs */
@@ -331,14 +354,20 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
+  width: 100%;
+  margin-bottom: 1.75rem;
 }
 
 @media (min-width: 640px) {
   .hero-cta-group {
     flex-direction: row;
-    gap: 1.25rem;
+    gap: 1.15rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero-cta-group {
+    justify-content: flex-start;
   }
 }
 
@@ -406,10 +435,15 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   font-size: 0.8rem;
-  color: #64748b;
-  margin-top: 1rem;
+  color: #94a3b8;
+}
+
+@media (min-width: 992px) {
+  .hero-trust-bar {
+    justify-content: flex-start;
+  }
 }
 
 .hero-trust-item {
@@ -418,76 +452,65 @@
   gap: 0.4rem;
 }
 
-/* --------------------------------------------------------------------------
-   HERO SHOWCASE & APP PREVIEW MOCKUP
-   -------------------------------------------------------------------------- */
-.hero-showcase-container {
-  margin-top: 3.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Realistic Visual Hero Image Banner */
-.hero-image-banner-wrapper {
+/* Integrated Visual Hero Image */
+.hero-visual-col {
   position: relative;
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
 }
 
 .hero-image-frame {
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06);
   background: #0f172a;
 }
 
 @media (min-width: 768px) {
   .hero-image-frame {
-    border-radius: 24px;
+    border-radius: 26px;
   }
 }
 
 .hero-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 280px;
   max-height: 480px;
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .hero-image-frame:hover .hero-image {
-  transform: scale(1.015);
+  transform: scale(1.025);
 }
 
 .hero-image-gradient-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11, 15, 25, 0.05) 0%, rgba(11, 15, 25, 0.3) 60%, rgba(11, 15, 25, 0.85) 100%);
+  background: linear-gradient(180deg, rgba(11, 15, 25, 0.05) 0%, rgba(11, 15, 25, 0.25) 60%, rgba(11, 15, 25, 0.8) 100%);
   pointer-events: none;
 }
 
 .hero-image-caption-pill {
   position: absolute;
-  bottom: 1.25rem;
-  left: 1.25rem;
-  right: 1.25rem;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.45rem 1rem;
-  background: rgba(15, 23, 42, 0.85);
+  padding: 0.4rem 0.9rem;
+  background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 999px;
   color: #e2e8f0;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   max-width: fit-content;
   margin: 0 auto;
@@ -521,6 +544,63 @@
   }
 }
 
+/* Floating Badges on Hero Image */
+.hero-floating-badge {
+  position: absolute;
+  padding: 0.65rem 1rem;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 10;
+  animation: float 4s ease-in-out infinite;
+}
+
+@media (min-width: 640px) {
+  .hero-floating-badge {
+    display: flex;
+  }
+}
+
+.badge-top-left {
+  top: 15px;
+  left: 15px;
+}
+
+@media (min-width: 992px) {
+  .badge-top-left {
+    top: -15px;
+    left: -20px;
+  }
+}
+
+.badge-bottom-right {
+  bottom: 45px;
+  right: 15px;
+  animation-delay: 2s;
+}
+
+@media (min-width: 992px) {
+  .badge-bottom-right {
+    bottom: 25px;
+    right: -20px;
+  }
+}
+
+.badge-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 /* Floating Badges */
 .floating-badge {
   position: absolute;
@@ -541,17 +621,6 @@
   .floating-badge {
     display: flex;
   }
-}
-
-.hero-badge-top-left {
-  top: -18px;
-  left: -20px;
-}
-
-.hero-badge-bottom-right {
-  bottom: 20px;
-  right: -20px;
-  animation-delay: 2s;
 }
 
 .hero-preview-wrapper {

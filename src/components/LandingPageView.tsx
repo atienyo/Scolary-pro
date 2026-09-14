@@ -195,63 +195,64 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       </header>
 
       {/* --------------------------------------------------------------------
-          HERO SECTION
+          HERO SECTION (Integrated Split 2-Column Showcase)
           -------------------------------------------------------------------- */}
       <section className="landing-hero">
         <div className="landing-container">
-          {/* Trust Pill */}
-          <div className="hero-pill-badge">
-            <Sparkles size={14} color="#60a5fa" />
-            <span>La solution N°1 d'encaissement scolaire en Afrique de l'Ouest</span>
-          </div>
+          {/* Integrated Split Layout: Text on Left, Visual Showcase on Right */}
+          <div className="hero-split-grid">
+            {/* Left Column: Heading, Subtitle & CTAs */}
+            <div className="hero-content-col">
+              {/* Trust Pill */}
+              <div className="hero-pill-badge">
+                <Sparkles size={14} color="#60a5fa" />
+                <span>N°1 de l'encaissement scolaire en Afrique de l'Ouest</span>
+              </div>
 
-          {/* Main Title */}
-          <h1 className="hero-title">
-            Simplifiez la gestion scolaire &{' '}
-            <span className="hero-title-gradient">sécurisez 100% de vos encaissements</span>
-          </h1>
+              {/* Main Title */}
+              <h1 className="hero-title">
+                Simplifiez la gestion scolaire &{' '}
+                <span className="hero-title-gradient">sécurisez 100% de vos encaissements</span>
+              </h1>
 
-          {/* Subtitle */}
-          <p className="hero-subtitle">
-            Guichet caisse ultra-rapide (Espèces & Mobile Money Wave/Orange/MTN), émission instantanée de reçus avec QR Code, suivi automatique des impayés et arrêté de caisse certifié pour Collèges et Lycées.
-          </p>
+              {/* Subtitle */}
+              <p className="hero-subtitle">
+                Guichet caisse ultra-rapide (Espèces & Mobile Money Wave/Orange/MTN), émission instantanée de reçus certifiés avec QR Code, suivi automatique des impayés et arrêté de caisse infalsifiable pour Collèges et Lycées.
+              </p>
 
-          {/* Call to Actions (CTAs) */}
-          <div className="hero-cta-group">
-            <button className="btn-hero-primary" onClick={onStartDemo}>
-              <Sparkles size={19} />
-              <span>Tester la Démo interactive</span>
-              <ArrowRight size={19} />
-            </button>
+              {/* Call to Actions (CTAs) */}
+              <div className="hero-cta-group">
+                <button className="btn-hero-primary" onClick={onStartDemo}>
+                  <Sparkles size={19} />
+                  <span>Tester la Démo interactive</span>
+                  <ArrowRight size={19} />
+                </button>
 
-            <button className="btn-hero-secondary" onClick={onOpenSignUp}>
-              <Lock size={18} color="#60a5fa" />
-              <span>Créer un compte école</span>
-            </button>
-          </div>
+                <button className="btn-hero-secondary" onClick={onOpenSignUp}>
+                  <Lock size={18} color="#60a5fa" />
+                  <span>Créer un compte école</span>
+                </button>
+              </div>
 
-          {/* Trust bullet points */}
-          <div className="hero-trust-bar">
-            <div className="hero-trust-item">
-              <CheckCircle2 size={16} color="#10b981" />
-              <span>Essai gratuit sans carte bancaire</span>
+              {/* Trust bullet points */}
+              <div className="hero-trust-bar">
+                <div className="hero-trust-item">
+                  <CheckCircle2 size={16} color="#10b981" />
+                  <span>Essai gratuit sans carte bancaire</span>
+                </div>
+                <div className="hero-trust-item">
+                  <CheckCircle2 size={16} color="#10b981" />
+                  <span>Déploiement en 15 min</span>
+                </div>
+                <div className="hero-trust-item">
+                  <CheckCircle2 size={16} color="#10b981" />
+                  <span>Support WhatsApp 7j/7</span>
+                </div>
+              </div>
             </div>
-            <div className="hero-trust-item">
-              <CheckCircle2 size={16} color="#10b981" />
-              <span>Déploiement immédiat en 15 minutes</span>
-            </div>
-            <div className="hero-trust-item">
-              <CheckCircle2 size={16} color="#10b981" />
-              <span>Support dédié & WhatsApp 7j/7</span>
-            </div>
-          </div>
 
-          {/* ----------------------------------------------------------------
-              HERO VISUAL SHOWCASE & APP PREVIEW MOCKUP
-              ---------------------------------------------------------------- */}
-          <div className="hero-showcase-container">
-            {/* Visual Realistic Hero Image Banner */}
-            <div className="hero-image-banner-wrapper">
+            {/* Right Column: Integrated Realistic Visual Showcase */}
+            <div className="hero-visual-col">
               <div className="hero-image-frame">
                 <img 
                   src={heroBannerImg} 
@@ -260,36 +261,38 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                   loading="eager"
                 />
                 <div className="hero-image-gradient-overlay" />
+                
+                {/* Floating Badges overlaying the image */}
+                <div className="hero-floating-badge badge-top-left">
+                  <div className="badge-icon-wrap" style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981' }}>
+                    <CheckCircle2 size={20} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Taux de recouvrement</div>
+                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#10b981' }}>99.4% à date</div>
+                  </div>
+                </div>
+
+                <div className="hero-floating-badge badge-bottom-right">
+                  <div className="badge-icon-wrap" style={{ background: 'rgba(59, 91, 219, 0.25)', color: '#60a5fa' }}>
+                    <QrCode size={20} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Reçus infalsifiables</div>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#ffffff' }}>QR Code Certifié</div>
+                  </div>
+                </div>
+
                 <div className="hero-image-caption-pill">
                   <span className="live-pulse-dot" />
-                  <span>Établissements partenaires en Côte d'Ivoire & Afrique de l'Ouest</span>
-                </div>
-              </div>
-
-              {/* Floating badges on the visual hero banner */}
-              <div className="floating-badge hero-badge-top-left">
-                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
-                  <CheckCircle2 size={20} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Taux de recouvrement</div>
-                  <div style={{ fontSize: '1.05rem', fontWeight: 800, color: '#10b981' }}>99.4% à date</div>
-                </div>
-              </div>
-
-              <div className="floating-badge hero-badge-bottom-right">
-                <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'rgba(59, 91, 219, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#60a5fa' }}>
-                  <QrCode size={20} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: 600 }}>Reçus infalsifiables</div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#ffffff' }}>QR Code Certifié</div>
+                  <span>Établissements partenaires en Côte d'Ivoire & Afrique</span>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Interactive Mockup Dashboard Card */}
-            <div className="hero-preview-wrapper">
+          {/* Interactive Mockup Dashboard Card */}
+          <div className="hero-preview-wrapper" style={{ marginTop: '3.5rem' }}>
               <div className="hero-preview-card" onClick={onStartDemo} style={{ cursor: 'pointer' }} title="Cliquez pour tester la démo en direct">
                 <div className="mockup-header-bar">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -352,7 +355,6 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
