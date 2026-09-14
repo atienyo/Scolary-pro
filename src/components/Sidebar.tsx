@@ -39,24 +39,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       badge: null,
     },
     {
-      id: 'cashier',
-      label: 'Guichet Caisse',
-      icon: DollarSign,
-      badge: 'Flash',
-      badgeColor: '#10b981',
-    },
-    {
-      id: 'students',
-      label: 'Élèves & Dossiers',
-      icon: Users,
+      id: 'settings',
+      label: 'Configuration École',
+      icon: Sliders,
       badge: null,
-    },
-    {
-      id: 'overdue',
-      label: 'Impayés & Relances',
-      icon: AlertTriangle,
-      badge: overdueCount > 0 ? `${overdueCount}` : null,
-      badgeColor: '#ef4444',
     },
     {
       id: 'fees',
@@ -65,10 +51,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
       badge: null,
     },
     {
-      id: 'settings',
-      label: 'Configuration École',
-      icon: Sliders,
+      id: 'students',
+      label: 'Élèves & Dossiers',
+      icon: Users,
       badge: null,
+    },
+    {
+      id: 'cashier',
+      label: 'Guichet Caisse',
+      icon: DollarSign,
+      badge: 'Flash',
+      badgeColor: '#10b981',
+    },
+    {
+      id: 'overdue',
+      label: 'Impayés & Relances',
+      icon: AlertTriangle,
+      badge: overdueCount > 0 ? `${overdueCount}` : null,
+      badgeColor: '#ef4444',
     },
   ];
 
