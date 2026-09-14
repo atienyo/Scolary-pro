@@ -115,11 +115,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           {/* Desktop Nav Links */}
           <nav className="landing-nav-links">
             <a className="landing-nav-link" onClick={() => scrollToSection('features')}>Fonctionnalités</a>
-            <a className="landing-nav-link" onClick={() => scrollToSection('calculator')}>Calculateur ROI</a>
             <a className="landing-nav-link" onClick={() => scrollToSection('how-it-works')}>Comment ça marche</a>
-            <a className="landing-nav-link" onClick={() => scrollToSection('testimonials')}>Avis</a>
             <a className="landing-nav-link" onClick={() => scrollToSection('pricing')}>Tarifs</a>
-            <a className="landing-nav-link" onClick={() => scrollToSection('faq')}>FAQ</a>
           </nav>
 
           {/* Desktop Nav Actions */}
@@ -151,24 +148,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                 <span>Fonctionnalités</span>
                 <ArrowRight size={16} color="#64748b" />
               </a>
-              <a className="mobile-drawer-link" onClick={() => scrollToSection('calculator')}>
-                <span>Calculateur ROI</span>
-                <ArrowRight size={16} color="#64748b" />
-              </a>
               <a className="mobile-drawer-link" onClick={() => scrollToSection('how-it-works')}>
                 <span>Comment ça marche</span>
                 <ArrowRight size={16} color="#64748b" />
               </a>
-              <a className="mobile-drawer-link" onClick={() => scrollToSection('testimonials')}>
-                <span>Témoignages</span>
-                <ArrowRight size={16} color="#64748b" />
-              </a>
               <a className="mobile-drawer-link" onClick={() => scrollToSection('pricing')}>
                 <span>Grille tarifaire</span>
-                <ArrowRight size={16} color="#64748b" />
-              </a>
-              <a className="mobile-drawer-link" onClick={() => scrollToSection('faq')}>
-                <span>Questions fréquentes</span>
                 <ArrowRight size={16} color="#64748b" />
               </a>
             </div>
@@ -1093,10 +1078,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <div className="footer-col-title">Navigation</div>
               <ul className="footer-links">
                 <li><a className="footer-link" onClick={() => scrollToSection('features')}>Fonctionnalités</a></li>
-                <li><a className="footer-link" onClick={() => scrollToSection('calculator')}>Calculateur ROI</a></li>
                 <li><a className="footer-link" onClick={() => scrollToSection('how-it-works')}>Comment ça marche</a></li>
                 <li><a className="footer-link" onClick={() => scrollToSection('pricing')}>Tarifs</a></li>
-                <li><a className="footer-link" onClick={() => scrollToSection('faq')}>FAQ</a></li>
               </ul>
             </div>
 
