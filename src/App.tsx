@@ -203,12 +203,20 @@ export function App() {
     localStorage.setItem('scolarpay_payments', JSON.stringify(payments));
   }, [payments]);
 
-  // Compute overdue count for sidebar badge
-  const overdueCount = useMemo(() => {
-    return students.filter((s) => {
+  // Compute overdue count and critical count for sidebar badges
+  const { overdueCount, criticalCount } = useMemo(() => {
+    let overdue = 0;
+    let critical = 0;
+    students.forEach((s) => {
       const fin = calculateStudentFinancials(s, feePlans, payments);
-      return fin.status === 'LATE' || fin.status === 'CRITICAL';
-    }).length;
+      if (fin.hasCriticalOverdue || fin.status === 'CRITICAL' || (fin.daysLate > 7 && fin.remainingBalance > 0)) {
+        critical++;
+      }
+      if (fin.status === 'LATE' || fin.status === 'CRITICAL' || fin.remainingBalance > 0 || (fin.overdueInstallments && fin.overdueInstallments.length > 0)) {
+        overdue++;
+      }
+    });
+    return { overdueCount: overdue, criticalCount: critical };
   }, [students, feePlans, payments]);
 
   // Active cashier title
@@ -367,6 +375,7 @@ export function App() {
         setCurrentTab={setCurrentTab}
         schoolConfig={schoolConfig}
         overdueCount={overdueCount}
+        criticalCount={criticalCount}
         isMobileOpen={isMobileSidebarOpen}
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
       />
@@ -410,8 +419,10 @@ export function App() {
             payments={payments}
             schoolConfig={schoolConfig}
             activeCashierName={activeCashierName}
+            initialStudentId={cashierPreselectedStudentId}
             onPaymentSuccess={handlePaymentSuccess}
             onViewReceipt={(p, rem, tot) => handleViewReceipt(p, rem, tot)}
+            onOpenDailyRegister={() => setShowDailyRegister(true)}
           />
         )}
 
@@ -434,12 +445,13 @@ export function App() {
           />
         )}
 
-        {currentTab === 'overdue' && (
+        {(currentTab === 'overdue' || currentTab === 'overdue-critical') && (
           <OverdueView
             students={students}
             feePlans={feePlans}
             payments={payments}
             schoolConfig={schoolConfig}
+            initialFilter={currentTab === 'overdue-critical' ? 'CRITICAL_7' : 'ALL_UNPAID'}
             onPayForStudent={handlePayForStudent}
           />
         )}

@@ -93,6 +93,19 @@ export interface PaymentTransaction {
   cashReturned?: number;
 }
 
+export interface InstallmentStatusItem {
+  installment: InstallmentDef;
+  amountDue: number;
+  amountPaid: number;
+  isSettled: boolean;
+  isOverdue: boolean;
+  daysOverdue: number;
+  daysUntilDue: number;
+  isDueSoon: boolean;
+  isCriticalOverdue: boolean;
+  isModerateOverdue: boolean;
+}
+
 export interface StudentFinancialSummary {
   student: Student;
   totalDue: number;
@@ -101,14 +114,14 @@ export interface StudentFinancialSummary {
   status: PaymentStatus;
   daysLate: number;
   lastPaymentDate?: string;
-  installmentsStatus: {
-    installment: InstallmentDef;
-    amountDue: number;
-    amountPaid: number;
-    isSettled: boolean;
-    isOverdue: boolean;
-    daysOverdue: number;
-  }[];
+  installmentsStatus: InstallmentStatusItem[];
+  hasDueSoonInstallment?: boolean;
+  hasCriticalOverdue?: boolean;
+  hasLateOverdue?: boolean;
+  dueSoonInstallments?: InstallmentStatusItem[];
+  overdueInstallments?: InstallmentStatusItem[];
+  criticalOverdueInstallments?: InstallmentStatusItem[];
+  lateOverdueInstallments?: InstallmentStatusItem[];
 }
 
 export interface AuthUser {

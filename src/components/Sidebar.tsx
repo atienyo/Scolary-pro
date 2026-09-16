@@ -4,13 +4,14 @@ import {
   Receipt, 
   Users, 
   AlertTriangle, 
+  AlertOctagon,
   Settings2, 
   School, 
   GraduationCap, 
-  Sliders,
-  DollarSign,
-  Layers,
-  X
+  Sliders, 
+  DollarSign, 
+  Layers, 
+  X 
 } from 'lucide-react';
 import { SchoolConfig } from '../types';
 
@@ -19,6 +20,7 @@ interface SidebarProps {
   setCurrentTab: (tab: string) => void;
   schoolConfig: SchoolConfig;
   overdueCount: number;
+  criticalCount?: number;
   isMobileOpen?: boolean;
   onCloseMobile?: () => void;
 }
@@ -28,6 +30,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setCurrentTab,
   schoolConfig,
   overdueCount,
+  criticalCount = 0,
   isMobileOpen = false,
   onCloseMobile,
 }) => {
@@ -64,11 +67,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
       badgeColor: '#10b981',
     },
     {
+      id: 'overdue-critical',
+      label: 'Cas Critiques (> 7j)',
+      icon: AlertOctagon,
+      badge: criticalCount > 0 ? `${criticalCount}` : null,
+      badgeColor: '#dc2626',
+    },
+    {
       id: 'overdue',
       label: 'Impayés & Relances',
       icon: AlertTriangle,
       badge: overdueCount > 0 ? `${overdueCount}` : null,
-      badgeColor: '#ef4444',
+      badgeColor: '#f59e0b',
     },
   ];
 

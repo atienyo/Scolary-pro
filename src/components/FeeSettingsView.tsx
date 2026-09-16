@@ -74,6 +74,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
     });
 
     setPlans(updatedPlans);
+    onUpdateFeePlans(updatedPlans);
   };
 
   // Modify class metadata (name, level)
@@ -86,6 +87,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
       return p;
     });
     setPlans(updatedPlans);
+    onUpdateFeePlans(updatedPlans);
   };
 
   // Add a new installment to the current plan
@@ -115,6 +117,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
     });
 
     setPlans(updatedPlans);
+    onUpdateFeePlans(updatedPlans);
   };
 
   // Delete an installment
@@ -140,6 +143,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
     });
 
     setPlans(updatedPlans);
+    onUpdateFeePlans(updatedPlans);
   };
 
   // Save all fee changes

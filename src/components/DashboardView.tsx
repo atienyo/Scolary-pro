@@ -13,7 +13,8 @@ import {
   Clock,
   CheckCircle,
   AlertTriangle,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Bell
 } from 'lucide-react';
 import { 
   Student, 
@@ -57,6 +58,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     let upToDateCount = 0;
     let lateCount = 0;
     let criticalCount = 0;
+    let dueSoonCount = 0;
 
     students.forEach((student) => {
       const summary = calculateStudentFinancials(student, feePlans, payments);
@@ -69,6 +71,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       } else {
         lyceeExpected += summary.totalDue;
         lyceeCollected += summary.totalPaid;
+      }
+
+      if (summary.hasDueSoonInstallment) {
+        dueSoonCount++;
       }
 
       if (summary.status === 'UP_TO_DATE' || summary.status === 'OVERPAID') {
@@ -105,6 +111,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       upToDateCount,
       lateCount,
       criticalCount,
+      dueSoonCount,
       totalStudents: students.length,
       methodTotals,
     };
@@ -256,11 +263,66 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       </div>
 
-      {/* Critical Alert Notice if late students exist */}
+      {/* Pre-due date Alert Banner (J-3) */}
+      {stats.dueSoonCount > 0 && (
+        <div style={{
+          background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+          border: '1.5px solid #f59e0b',
+          borderRadius: 'var(--radius-lg)',
+          padding: '1rem 1.4rem',
+          marginBottom: '1.25rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          boxShadow: '0 4px 12px rgba(245, 158, 11, 0.12)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: '280px' }}>
+            <div style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '8px',
+              background: '#f59e0b',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Bell size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 800, color: '#92400e', fontSize: '0.92rem' }}>
+                🔔 Échéances Imminentes (J-3) : {stats.dueSoonCount} élève(s) ont une tranche qui arrive à échéance sous 3 jours
+              </div>
+              <div style={{ fontSize: '0.8rem', color: '#b45309' }}>
+                Anticipez les encaissements au guichet caisse ou envoyez un pré-avis WhatsApp préventif aux familles.
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => onNavigateToTab('cashier')}
+            className="btn btn-secondary"
+            style={{
+              background: '#ffffff',
+              border: '1.5px solid #f59e0b',
+              color: '#92400e',
+              fontWeight: 800,
+              fontSize: '0.825rem'
+            }}
+          >
+            Ouvrir la Caisse (J-3)
+          </button>
+        </div>
+      )}
+
+      {/* Critical Alert Notice if late students exist (> 1 week) */}
       {stats.criticalCount > 0 && (
         <div style={{
-          background: '#fffbeb',
-          border: '1px solid #fde68a',
+          background: '#fef2f2',
+          border: '1.5px solid #fecaca',
           borderRadius: 'var(--radius-lg)',
           padding: '1rem 1.4rem',
           marginBottom: '1.75rem',
@@ -268,15 +330,16 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '1rem'
+          gap: '1rem',
+          boxShadow: '0 4px 12px rgba(239, 68, 68, 0.08)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flex: 1, minWidth: '280px' }}>
             <div style={{
-              width: '36px',
-              height: '36px',
+              width: '38px',
+              height: '38px',
               borderRadius: '8px',
-              background: '#fef3c7',
-              color: '#d97706',
+              background: '#fee2e2',
+              color: '#dc2626',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -285,11 +348,11 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <AlertTriangle size={20} />
             </div>
             <div>
-              <div style={{ fontWeight: 800, color: '#92400e', fontSize: '0.92rem' }}>
-                Alerte Trésorerie : {stats.criticalCount} élève(s) ont un retard critique d'échéance (&gt; 30 jours)
+              <div style={{ fontWeight: 800, color: '#991b1b', fontSize: '0.92rem' }}>
+                Alerte Trésorerie : {stats.criticalCount} élève(s) ont un retard critique d'échéance (&gt; 1 semaine / 7 jours)
               </div>
-              <div style={{ fontSize: '0.8rem', color: '#b45309' }}>
-                Des relances automatisées par SMS et WhatsApp sont prêtes à être envoyées aux parents tuteurs.
+              <div style={{ fontSize: '0.8rem', color: '#b91c1c' }}>
+                Des relances automatisées par SMS et WhatsApp sont prêtes à être diffusées aux parents débiteurs.
               </div>
             </div>
           </div>
@@ -299,9 +362,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             className="btn btn-secondary"
             style={{
               background: '#ffffff',
-              border: '1px solid #fde68a',
-              color: '#92400e',
-              fontWeight: 700,
+              border: '1px solid #fca5a5',
+              color: '#dc2626',
+              fontWeight: 800,
               fontSize: '0.825rem'
             }}
           >

@@ -134,7 +134,7 @@ export const exportUtils = {
         `"${s.guardianPhone}"`,
         `"${s.guardianEmail}"`,
         fin.remainingBalance,
-        `"${fin.status === 'CRITICAL' ? 'CRITIQUE (>30j)' : 'RETARD'}"`,
+        `"${fin.status === 'CRITICAL' ? 'CRITIQUE (>7j)' : 'RETARD'}"`,
         fin.daysLate
       ];
     });

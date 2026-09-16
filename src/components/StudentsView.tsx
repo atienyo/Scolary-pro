@@ -31,7 +31,8 @@ import {
   calculateStudentFinancials, 
   getStatusBadge,
   formatDate,
-  getMethodDetails
+  getMethodDetails,
+  normalizeClassName
 } from '../utils/formatters';
 import { exportUtils } from '../utils/exportUtils';
 
@@ -75,8 +76,14 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
         s.matricule.toLowerCase().includes(searchTerm.toLowerCase()) ||
         s.guardianName.toLowerCase().includes(searchTerm.toLowerCase());
 
-      // Class filter
-      const matchesClass = selectedClass === 'ALL' || s.classId === selectedClass;
+      // Class filter with normalization
+      let matchesClass = selectedClass === 'ALL';
+      if (!matchesClass) {
+        const targetPlan = feePlans.find(p => p.classId === selectedClass);
+        const targetNorm = targetPlan ? normalizeClassName(targetPlan.className) : normalizeClassName(selectedClass);
+        const studentNorm = normalizeClassName(s.className);
+        matchesClass = s.classId === selectedClass || (Boolean(targetNorm) && Boolean(studentNorm) && (targetNorm === studentNorm || targetNorm.includes(studentNorm) || studentNorm.includes(targetNorm)));
+      }
 
       // Level filter
       const matchesLevel = selectedLevel === 'ALL' || s.level === selectedLevel;
@@ -84,7 +91,19 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
       // Status filter
       if (selectedStatus !== 'ALL') {
         const fin = calculateStudentFinancials(s, feePlans, payments);
-        if (selectedStatus !== fin.status) return false;
+        if (selectedStatus === 'UNPAID') {
+          if (fin.remainingBalance <= 0) return false;
+        } else if (selectedStatus === 'DUE_SOON') {
+          if (!fin.hasDueSoonInstallment) return false;
+        } else if (selectedStatus === 'CRITICAL') {
+          if (!fin.hasCriticalOverdue && fin.status !== 'CRITICAL') return false;
+        } else if (selectedStatus === 'LATE') {
+          if ((!fin.hasLateOverdue && fin.status !== 'LATE') || fin.hasCriticalOverdue || fin.status === 'CRITICAL') return false;
+        } else if (selectedStatus === 'UP_TO_DATE') {
+          if (fin.remainingBalance > 0) return false;
+        } else if (selectedStatus !== fin.status) {
+          return false;
+        }
       }
 
       return matchesSearch && matchesClass && matchesLevel;
@@ -192,9 +211,11 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
             className="form-select"
           >
             <option value="ALL">Tous les Statuts</option>
-            <option value="UP_TO_DATE">À jour (Soldé)</option>
-            <option value="LATE">Retard modéré</option>
-            <option value="CRITICAL">Impayé critique</option>
+            <option value="UNPAID">⚡ Tous les Impayés (Reste &gt; 0)</option>
+            <option value="CRITICAL">🚨 Impayés Critiques (&gt; 7 jours)</option>
+            <option value="LATE">⚠️ Retards Modérés (1-7 jours)</option>
+            <option value="DUE_SOON">🔔 Échéances Imminentes (J-3)</option>
+            <option value="UP_TO_DATE">✓ Soldés / À jour</option>
           </select>
 
         </div>
@@ -482,23 +503,65 @@ export const StudentsView: React.FC<StudentsViewProps> = ({
                       style={{
                         padding: '0.75rem 1rem',
                         borderRadius: 'var(--radius-md)',
-                        background: item.isSettled ? '#f0fdf4' : item.isOverdue ? '#fef2f2' : '#ffffff',
-                        border: `1px solid ${item.isSettled ? '#a7f3d0' : item.isOverdue ? '#fecaca' : '#e2e8f0'}`,
+                        background: item.isSettled 
+                          ? '#f0fdf4' 
+                          : item.isCriticalOverdue
+                          ? '#fef2f2'
+                          : item.isOverdue 
+                          ? '#fff5f5' 
+                          : item.isDueSoon
+                          ? '#fffdf0'
+                          : '#ffffff',
+                        border: `1px solid ${
+                          item.isSettled 
+                            ? '#a7f3d0' 
+                            : item.isCriticalOverdue
+                            ? '#fca5a5'
+                            : item.isOverdue 
+                            ? '#fecaca' 
+                            : item.isDueSoon
+                            ? '#fcd34d'
+                            : '#e2e8f0'
+                        }`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between'
                       }}
                     >
                       <div>
-                        <div style={{ fontWeight: 700, fontSize: '0.875rem' }}>{item.installment.title}</div>
-                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <span style={{ fontWeight: 700, fontSize: '0.875rem' }}>{item.installment.title}</span>
+                          {item.isDueSoon && (
+                            <span style={{
+                              fontSize: '0.65rem',
+                              background: '#fef3c7',
+                              color: '#b45309',
+                              border: '1px solid #fde68a',
+                              padding: '1px 5px',
+                              borderRadius: '4px',
+                              fontWeight: 800
+                            }}>
+                              🔔 {item.daysUntilDue === 0 ? "Aujourd'hui" : `dans ${item.daysUntilDue}j (J-${item.daysUntilDue})`}
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
                           Échéance : {formatDate(item.installment.dueDate)}
-                          {item.isOverdue && <span style={{ color: '#dc2626', fontWeight: 700, marginLeft: '0.4rem' }}>(Retard {item.daysOverdue} j)</span>}
+                          {item.isCriticalOverdue && (
+                            <span style={{ color: '#dc2626', fontWeight: 800, marginLeft: '0.4rem' }}>
+                              (🚨 Retard critique {item.daysOverdue} j &gt; 1 sem)
+                            </span>
+                          )}
+                          {item.isOverdue && !item.isCriticalOverdue && (
+                            <span style={{ color: '#ea580c', fontWeight: 700, marginLeft: '0.4rem' }}>
+                              (⚠️ Retard {item.daysOverdue} j)
+                            </span>
+                          )}
                         </div>
                       </div>
 
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontWeight: 800, fontSize: '0.9rem', color: item.isSettled ? '#059669' : '#0f172a' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.9rem', color: item.isSettled ? '#059669' : item.isCriticalOverdue ? '#dc2626' : item.isDueSoon ? '#b45309' : '#0f172a' }}>
                           {item.isSettled ? 'ACQUITTÉ' : `${formatCurrency(item.amountDue - item.amountPaid, schoolConfig.currency)} restant`}
                         </div>
                         <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
