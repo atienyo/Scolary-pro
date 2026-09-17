@@ -1337,7 +1337,7 @@ export const CashierView: React.FC<CashierViewProps> = ({
               )}
             </div>
 
-            <form onSubmit={handleProcessPayment} style={{ padding: '1.5rem' }}>
+            <form onSubmit={handleProcessPayment} noValidate style={{ padding: '1.5rem' }}>
               
               {/* Quick Preset Installment Buttons */}
               <div style={{ marginBottom: '1.25rem' }}>
@@ -1428,8 +1428,8 @@ export const CashierView: React.FC<CashierViewProps> = ({
                     <input
                       type="number"
                       required
-                      min={100}
-                      step={500}
+                      min={1}
+                      step="any"
                       value={paymentAmount || ''}
                       onChange={(e) => setPaymentAmount(Number(e.target.value))}
                       placeholder="0"
@@ -1602,6 +1602,8 @@ export const CashierView: React.FC<CashierViewProps> = ({
                       </label>
                       <input
                         type="number"
+                        min={0}
+                        step="any"
                         placeholder="Ex: 50000"
                         value={cashGiven || ''}
                         onChange={(e) => setCashGiven(Number(e.target.value))}

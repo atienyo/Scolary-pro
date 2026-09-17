@@ -488,7 +488,7 @@ export const FeeSettingsView: React.FC<FeeSettingsViewProps> = ({
                           <input
                             type="number"
                             min={0}
-                            step={1000}
+                            step="any"
                             value={inst.amount}
                             onChange={(e) => handleUpdateInstallment(inst.id, 'amount', Number(e.target.value))}
                             className="form-input"
